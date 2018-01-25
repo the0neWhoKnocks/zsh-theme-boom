@@ -44,7 +44,7 @@ function precmd {
     gitBranchStart="$CHAR_vertBar
 $CHAR_rightVertBarBranch$CHAR_horzBar $SWITCH_TO_NORM_CHARS$COL_yellow"
     gitBranchEnd="
-" 
+"
   fi
 
   local TERMWIDTH
@@ -53,27 +53,17 @@ $CHAR_rightVertBarBranch$CHAR_horzBar $SWITCH_TO_NORM_CHARS$COL_yellow"
 
   ###
   # Truncate the path if it's too long.
-  
+
   PR_FILLBAR=""
   PR_PWDLEN=""
-  
+
   local promptsize=${#${(%):---( $userType $userName $currentDir )----($dateAndTime)-}}
   local pwdsize=${#${(%):-}}
-  
+
   if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
     ((PR_PWDLEN=$TERMWIDTH - $promptsize))
   else
     PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${CHAR_horzBar}.)}"
-  fi
-
-
-  ###
-  # Get APM info.
-
-  if which ibam > /dev/null; then
-    PR_APM_RESULT=`ibam --percentbattery`
-  elif which apm > /dev/null; then
-    PR_APM_RESULT=`apm`
   fi
 }
 
@@ -108,7 +98,7 @@ function setprompt () {
 
   ###
   # See if we can use extended characters to look nicer.
-  
+
   typeset -A altchar
   set -A altchar ${(s..)terminfo[acsc]}
   SET_charset="%{$terminfo[enacs]%}"
@@ -127,10 +117,10 @@ function setprompt () {
   # print this for a list of extended characters & their associated normal characters
   extendedChars=$(echo -e $SWITCH_TO_EXT_CHARS$charMap; echo -e $SWITCH_TO_NORM_CHARS\n$charMap)
 
-  
+
   ###
   # Decide if we need to set titlebar text.
-  
+
   case $TERM in
     xterm*)
       SET_titleBar=$'%{\e]0;%(!.-=*[ROOT]*=- | .)$titlebar_xterm \a%}'
@@ -142,26 +132,14 @@ function setprompt () {
       SET_titleBar=''
     ;;
   esac
-  
-  
+
+
   ###
   # Decide whether to set a screen title
   if [[ "$TERM" == "screen" ]]; then
     SET_screenTitle=$'%{\ekzsh\e\\%}'
   else
     SET_screenTitle=''
-  fi
-  
-  
-  ###
-  # APM detection
-  
-  if which ibam > /dev/null; then
-    PR_APM='$COL_red${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
-  elif which apm > /dev/null; then
-    PR_APM='$COL_red${PR_APM_RESULT[(w)5,(w)6]/\% /%%}$PR_LIGHT_BLUE:'
-  else
-    PR_APM=''
   fi
 
   ###
