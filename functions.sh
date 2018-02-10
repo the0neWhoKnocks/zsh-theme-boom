@@ -1,5 +1,15 @@
 local currDir=$(dirname $0)
 
+# Detect what system type the skin is running under
+case "$(uname -s)" in
+  CYGWIN*)
+    systemType="Cygwin"
+    ;;
+  Darwin)
+    systemType="OSX"
+    ;;
+esac
+
 function clear {
 	#echo -e '\0033\0143'
   printf "\033c"
@@ -57,3 +67,13 @@ function col-palette {
 	done
 	echo
 }
+
+# == SET alias' =================================================
+alias gen-ssh='ssh-keygen -t rsa -C'
+
+if [[ "$systemType" == "Cygwin" ]]; then
+  alias get-ssh='clip < ~/.ssh/id_rsa.pub'
+  alias open='explorer'
+elif [[ "systemType" == "OSX" ]]; then
+  alias get-ssh='pbcopy < ~/.ssh/id_rsa.pub'
+fi
