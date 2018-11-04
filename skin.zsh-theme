@@ -41,8 +41,10 @@ function precmd {
 
   # add a branch character and the GIT branch name to the prompt
   if [ $gitBranch ]; then
+    __setGitIcons
+  
     gitBranchStart="$CHAR_vertBar
-$CHAR_rightVertBarBranch$CHAR_horzBar $SWITCH_TO_NORM_CHARS$COL_yellow"
+$CHAR_rightVertBarBranch$CHAR_horzBar$SWITCH_TO_NORM_CHARS( $SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS$__ZSH_THEME_VCS_ICON $__ZSH_THEME_VCS_BRANCH$SWITCH_TO_LIGHT_COLOR$COL_black )$SWITCH_TO_EXT_CHARS$CHAR_horzBar $COL_yellow"
     gitBranchEnd="
 "
   fi
@@ -57,7 +59,7 @@ $CHAR_rightVertBarBranch$CHAR_horzBar $SWITCH_TO_NORM_CHARS$COL_yellow"
   PR_FILLBAR=""
   PR_PWDLEN=""
 
-  local promptsize=${#${(%):---( $userType $userName $currentDir )----($dateAndTime)-}}
+  local promptsize=${#${(%):---( $__ZSH_THEME_OS_ICON $userType $userName $currentDir )----($dateAndTime)-}}
   local pwdsize=${#${(%):-}}
 
   if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
@@ -147,10 +149,10 @@ function setprompt () {
 
   PROMPT='
 $SET_charset$SET_screenTitle${(e)SET_titleBar}\
-$SWITCH_TO_LIGHT_COLOR$COL_red$SWITCH_TO_EXT_CHARS$CHAR_upperLeftCorner$COL_red$CHAR_horzBar$CHAR_leftVertBarBranch$SWITCH_TO_NORM_CHARS $COL_green$userType $COL_cyan$userName $COL_black$currentDir$COL_red $SWITCH_TO_EXT_CHARS$CHAR_rightVertBarBranch$CHAR_horzBar$COL_red$CHAR_horzBar${(e)PR_FILLBAR}$COL_red$CHAR_horzBar$CHAR_horzBar$COL_red$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_black$dateAndTime$COL_red)$SWITCH_TO_EXT_CHARS$CHAR_horzBar\
+$SWITCH_TO_LIGHT_COLOR$COL_black$SWITCH_TO_EXT_CHARS$CHAR_upperLeftCorner$COL_black$CHAR_horzBar$CHAR_leftVertBarBranch$SWITCH_TO_NORM_CHARS $RESET_TEXT_FLAGS$COL_white$__ZSH_THEME_OS_ICON$SWITCH_TO_LIGHT_COLOR $COL_green$userType $COL_black$userName $COL_cyan$currentDir$COL_black $SWITCH_TO_EXT_CHARS$CHAR_rightVertBarBranch$CHAR_horzBar$COL_black$CHAR_horzBar${(e)PR_FILLBAR}$COL_black$CHAR_horzBar$CHAR_horzBar$COL_black$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_black$dateAndTime$COL_black)$SWITCH_TO_EXT_CHARS$CHAR_horzBar\
 $gitBranchStart$SWITCH_TO_NORM_CHARS$gitBranch$gitBranchEnd\
-$SWITCH_TO_EXT_CHARS$COL_red$CHAR_vertBar
-$CHAR_leftLeftCorner$COL_red$CHAR_horzBar$CHAR_horzBar$CHAR_horzBar$CHAR_diamond$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS '
+$SWITCH_TO_EXT_CHARS$COL_black$CHAR_vertBar
+$CHAR_leftLeftCorner$COL_black$CHAR_horzBar$CHAR_horzBar$CHAR_horzBar$COL_yellow$CHAR_diamond$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS '
 
   RPROMPT=''
   #RPROMPT=' $COL_red$SWITCH_TO_EXT_CHARS$CHAR_horzBar$PR_BLUE$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_yellow%D{%a,%b%d}$PR_BLUE)$SWITCH_TO_EXT_CHARS$CHAR_horzBar$COL_cyan$CHAR_leftRightCorner$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS'
