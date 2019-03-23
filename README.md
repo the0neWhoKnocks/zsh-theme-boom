@@ -13,12 +13,12 @@ There are a couple ways to install. Note that I'll use `BOOM_THEME` as the name
 of the directory path where you cloned or downloaded this repo:
 
 - Download the repo and then
-  - **Option 1**: In `~/.zshrc` add `source BOOM_THEME/skin.zsh-theme`.
-  - **Option 2**: If you're using *Oh-My-Zsh* make sure to place the source in
-  `~/.oh-my-zsh/custom/themes/BOOM_THEME`. You can then set this in your `.zshrc`
-  ```sh
-  ZSH_THEME="zsh-theme-boom/skin"
-  ```
+    - **Option 1**: In `~/.zshrc` add `source BOOM_THEME/skin.zsh-theme`.
+    - **Option 2**: If you're using *Oh-My-Zsh* make sure to place the source in
+    `~/.oh-my-zsh/custom/themes/BOOM_THEME`. You can then set this in your `.zshrc`
+    ```sh
+    ZSH_THEME="zsh-theme-boom/skin"
+    ```
 
 ---
 
@@ -41,16 +41,16 @@ in IDE's (in case you want to see the icons in `git-prompt.sh` & `functions.sh`.
     source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
     ```
 1. In the WSL terminal
-  - Looks:
-    - Theme: `base16-seti-ui.minttyrc`
-    - Transparency: `Med.`
-    - Opaque when focused: (checked)
-    - Cursor: `Block`
-    - Blinking: (checked)
-  - Text:
-    - Font: `FantasqueSansMono NF, 14pt`
-  - Terminal:
-    - Type: `xterm-256color`
+    - Looks:
+      - Theme: `base16-seti-ui.minttyrc`
+      - Transparency: `Med.`
+      - Opaque when focused: (checked)
+      - Cursor: `Block`
+      - Blinking: (checked)
+    - Text:
+      - Font: `FantasqueSansMono NF, 14pt`
+    - Terminal:
+      - Type: `xterm-256color`
 
 ---
 
