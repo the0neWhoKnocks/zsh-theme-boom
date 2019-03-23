@@ -517,6 +517,7 @@ function __setGitIcons {
   typeset -g __ZSH_THEME_VCS_ICON __ZSH_THEME_VCS_BRANCH
   local remote=$(command git ls-remote --get-url 2> /dev/null)
   
+	# Icons - http://nerdfonts.com/#cheat-sheet
   __ZSH_THEME_VCS_BRANCH=$'\uF126' # 
   
   if [[ "$remote" =~ "github" ]] then

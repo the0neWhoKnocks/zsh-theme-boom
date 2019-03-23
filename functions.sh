@@ -46,6 +46,8 @@ __detectOS
 function __setOSIcon {
   typeset -g __ZSH_THEME_OS_ICON
   
+  # Icons - http://nerdfonts.com/#cheat-sheet
+  
   case "$__ZSH_THEME_OS" in            
     "OSX")
       __ZSH_THEME_OS_ICON=$'\uF179' # 
