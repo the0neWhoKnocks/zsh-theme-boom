@@ -32,14 +32,14 @@ in IDE's (in case you want to see the icons in `git-prompt.sh` & `functions.sh`.
 
 1. You'll need to install the `Fantasque` font.
 1. Optional (in `.zshrc`)
-  ```sh
-  # Oh-My-ZSH Settings
-  DISABLE_AUTO_UPDATE="true"
-  DISABLE_AUTO_TITLE="true"
-  plugins=(history zsh-autosuggestions)
-  # Init Oh-My-ZSH
-  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-  ```
+    ```sh
+    # Oh-My-ZSH Settings
+    DISABLE_AUTO_UPDATE="true"
+    DISABLE_AUTO_TITLE="true"
+    plugins=(history zsh-autosuggestions)
+    # Init Oh-My-ZSH
+    source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ```
 1. In the WSL terminal
   - Looks:
     - Theme: `base16-seti-ui.minttyrc`
