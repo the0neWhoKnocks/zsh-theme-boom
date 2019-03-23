@@ -18,3 +18,19 @@ of the directory path where you cloned or downloaded this repo:
   ```sh
   ZSH_THEME="zsh-theme-boom/skin"
   ```
+
+---
+
+## Troubleshooting
+
+**Why am I seeing my last command echoed in the output?**
+
+Turns out this is a known issue with oh-my-zsh in some terminals. Basically
+it's trying to set the title, failing, and dumping the failed output into the
+terminal (in this case, the last binary run).
+To get around that, go into your `.zshrc` file and uncomment this line:
+```sh
+DISABLE_AUTO_TITLE="true"
+```
+Restart your terminal or `source ~/.zshrc`, and you should be good to go.
+
