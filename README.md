@@ -9,48 +9,55 @@ A custom theme for ZSH
 
 ## Installation
 
-There are a couple ways to install. Note that I'll use `BOOM_THEME` as the name
+There are a couple ways to use the theme. Note that I'll use `BOOM_THEME` as the name
 of the directory path where you cloned or downloaded this repo:
 
-- Download the repo and then
-    - **Option 1**: In `~/.zshrc` add `source BOOM_THEME/skin.zsh-theme`.
-    - **Option 2**: If you're using *Oh-My-Zsh* make sure to place the source in
-    `~/.oh-my-zsh/custom/themes/BOOM_THEME`. You can then set this in your `.zshrc`
-    ```sh
-    ZSH_THEME="zsh-theme-boom/skin"
-    ```
+- **Option 1**: In `~/.zshrc` add `source BOOM_THEME/skin.zsh-theme`.
+- **Option 2**: If you're using *Oh-My-Zsh* make sure to place the source in `${ZSH_CUSTOM}/themes/BOOM_THEME`. You can then set this in your `.zshrc`
+  ```sh
+  ZSH_THEME="zsh-theme-boom/skin"
+  ```
+
+Automated approach
+```sh
+(
+  git clone git@github.com:the0neWhoKnocks/zsh-theme-boom.git ${ZSH_CUSTOM}/themes/zsh-theme-boom
+  cd ${ZSH_CUSTOM}/themes/zsh-theme-boom
+  git checkout linux
+)
+sed -i -E 's|ZSH_THEME=".*"|ZSH_THEME="zsh-theme-boom/skin"|' ~/.zshrc
+```
 
 ---
 
 ## Configure
 
-I've provided [two fonts](./fonts). One that works with this
-[WSL terminal](https://github.com/goreliu/wsl-terminal), and the other that works well
-in IDE's (in case you want to see the icons in `git-prompt.sh` & `functions.sh`.
+This repo includes [two fonts](./fonts). One that works well with terminals, and the other that works well in IDE's (in case you want to see the icons in `git-prompt.sh` & `functions.sh`.
 - `Fantasque` is for the terminal
 - `Ubuntu` is for the IDE
 
-1. You'll need to install the `Fantasque` font.
-1. Optional (in `.zshrc`)
-    ```sh
-    # Oh-My-ZSH Settings
-    DISABLE_AUTO_UPDATE="true"
-    DISABLE_AUTO_TITLE="true"
-    plugins=(history zsh-autosuggestions)
-    # Init Oh-My-ZSH
-    source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-    ```
-1. In the WSL terminal
-    - Looks:
-      - Theme: `base16-seti-ui.minttyrc`
-      - Transparency: `Med.`
-      - Opaque when focused: (checked)
-      - Cursor: `Block`
-      - Blinking: (checked)
-    - Text:
-      - Font: `FantasqueSansMono NF, 14pt`
-    - Terminal:
-      - Type: `xterm-256color`
+1. Install the `Fantasque` font.
+  ```sh
+  sudo cp "${ZSH_CUSTOM}/themes/zsh-theme-boom/fonts/Fantasque Sans Mono Regular Nerd Font Complete Mono Windows Compatible.ttf" /usr/share/fonts/TTF/
+  fc-cache -vf
+  ```
+1. Optional settings and plugins
+  ```sh
+  # disable updates
+  sed "/^#zstyle ':omz:update' mode disabled/s/^#//" ~/.zshrc
+  
+  # add plugins
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+  sed "/plugins=(/,/)/c\plugins=(\n  zsh-autosuggestions\n  zsh-syntax-highlighting\n)" ~/.zshrc
+  ```
+1. In your terminal (I'm currently using Tilix)
+  - Preferences:
+    - Profiles > Default
+      ```
+      [General]
+      (check) Custom font: (pick) 'FantasqueSansMono NF Regular 18'
+      ```
 
 ---
 

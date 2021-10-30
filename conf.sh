@@ -16,12 +16,3 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FCNTL_LOCK
 # Pretty    Obvious.  Right?
 setopt HIST_REDUCE_BLANKS
-
-# https://cygwin.com/cygwin-ug-net/using-cygwinenv.html
-# each option is separated by a space
-export CYGWIN="nodosfilewarning winsymlinks:nativestrict"
-
-# Makes the Open ConEmu right-click command open the terminal within the current directory. 
-if [ -n "${ConEmuWorkDir}" ]; then
-  cd "$ConEmuWorkDir"
-fi
