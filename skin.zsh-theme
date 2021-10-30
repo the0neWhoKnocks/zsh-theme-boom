@@ -15,6 +15,7 @@ local currDir=$(dirname $0)
 source $currDir/colors.sh
 source $currDir/conf.sh
 source $currDir/functions.sh
+source $currDir/aliases.sh
 
 setopt extended_glob
 
