@@ -20,7 +20,7 @@ function __detectOS {
     
     Linux)
       __ZSH_THEME_OS='Linux'
-      # [[ ${(f)"$((</etc/os-release) 2>/dev/null)"} =~ "ID=([A-Za-z]+)" ]] && __ZSH_THEME_OS_ID="${match[1]}"
+      __ZSH_THEME_OS_ID=$(grep "^ID=" /etc/os-release | awk -F '=' '{ print $2 }')
       
       case $(uname -o 2>/dev/null) in
         Android)
