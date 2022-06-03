@@ -179,17 +179,25 @@ function setprompt () {
 }
 
 function showStartMessage {
-  echo '       _____      ______    ______ ___      ___'
-	echo '      / __  \   / ___   /\/ ___   /   A   /   /A'
-	echo '     / /WWW /A / /WWW  /W/ /WWW  /    \YV    /W/'
-	echo '    / ____  \W/ /WWW  /W/ /WWW  /           /W/'
-	echo '   / /WWWWW  / /WWW  /W/ /WWW  /  /A   A   /W/'
-	echo '  /_________/_______/W/______ /__/WWWWW/__/W/'
-	echo '  \WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW^WW^WWWWW/    *  *'
-	echo '                                              *  \/  *'
-	echo '-------------------------------------------------  -- '
-	echo '                                              *  /\  *'
-	echo '                                                *  *'
+	local msg=''
+  msg+='       _____      ______    ______ ___      ___ \n'
+	msg+='      / __  \   / ___   /\/ ___   /   A   /   /A \n'
+	msg+='     / /WWW /A / /WWW  /W/ /WWW  /    \YV    /W/ \n'
+	msg+='    / ____  \W/ /WWW  /W/ /WWW  /           /W/ \n'
+	msg+='   / /WWWWW  / /WWW  /W/ /WWW  /  /A   A   /W/ \n'
+	msg+='  /_________/_______/W/______ /__/WWWWW/__/W/ \n'
+	msg+='  \WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW^WW^WWWWW/    *  * \n'
+	msg+='                                              *  \/  * \n'
+	msg+='─────────────────────────────────────────────────  ──  \n'
+	msg+='                                              *  /\  * \n'
+	msg+='                                                *  * \n'
+	
+	if command -v lolcat &> /dev/null; then
+	  echo "${msg}" | lolcat --seed=50
+	else
+		echo "${msg}"
+	fi
+	
 	echo;
 }
 
