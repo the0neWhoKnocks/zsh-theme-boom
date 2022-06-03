@@ -18,56 +18,77 @@ source $currDir/functions.sh
 source $currDir/aliases.sh
 
 setopt extended_glob
+setopt prompt_subst
 
 # show GIT branch if inside GIT repo
 source $currDir/git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=1
 
+THEME__BOOM__PREV_COLUMNS=$COLUMNS
+PR_FILLBAR=""
+
+function calcBar {
+	local TERMWIDTH
+	local shrinking=false
+	if [ $THEME__BOOM__PREV_COLUMNS -eq $COLUMNS ]; then # equal
+		TERMWIDTH=$((COLUMNS - 1))
+	elif [ $THEME__BOOM__PREV_COLUMNS -lt $COLUMNS ]; then # growing
+		TERMWIDTH=$COLUMNS
+	else # shrinking
+		shrinking=true
+		TERMWIDTH=$((COLUMNS - 1))
+	fi
+	THEME__BOOM__PREV_COLUMNS=$COLUMNS
+
+  local minBarLength=${#${(%):---( $__ZSH_THEME_OS_ICON $userType $userName $currentDir )----($dateAndTime)-}}
+  if [ $minBarLength -le $TERMWIDTH ]; then
+		local lineLength=$((TERMWIDTH - minBarLength))
+		if $shrinking; then
+			lineLength=$((lineLength - 2))
+		fi
+		
+		# https://zsh.sourceforge.io/Guide/zshguide05.html
+		# The `fill' flags generate repeated words `l.`, with the effect of 
+		# perl's `x' operator (for those not familiar with perl, the expression 
+		# `"string" x 3' produces the string `stringstringstring'. Remember that the 
+		# fill width you specify is the total width, not the number of repetitions, 
+		# so you need to multiply it by the length of the string
+    PR_FILLBAR="\${(l.${lineLength}..${CHAR_horzBar}.)}"
+  fi
+}
+
+##
+# https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions
+# 
+# Hooks are arrays of functions that happen automatically when events occur in 
+# your shell. The hooks that are frequently used are chpwd, precmd, preexec, and
+# zshaddhistory.
+#
+# precmd is executed before your prompt is displayed and is often used to set 
+# values in your $PROMPT. preexec is executed between when you press enter on a 
+# command prompt but before the command is executed.
+##
 function precmd {
 	userType='%#'
 	userName='%n'
 	currentDir='%1~'
-	gitBranch=$(__git_ps1)
-  gitBranchStart=''
-  gitBranchEnd=''
   dateAndTime=' %w,%t '
   titlebar_xterm=$(print -Pn " %1~ ")
   currDirPath=$(print -Pn " %~ ")
 
-  # extra logic to pretty up the titlebar. Will display the current dir first, then the full path if they're not the same.
-  if [[ "$titlebar_xterm" != "$currDirPath" ]]; then
-    currDirPath=" ${currDirPath##*'/cygdrive/'}"
-    titlebar_xterm="$titlebar_xterm       [$currDirPath]"
-  fi
-
-  # add a branch character and the GIT branch name to the prompt
-  if [ $gitBranch ]; then
-    __setGitIcons
-  
-    gitBranchStart="$CHAR_vertBar
-$CHAR_rightVertBarBranch$CHAR_horzBar$SWITCH_TO_NORM_CHARS( $SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS$__ZSH_THEME_VCS_ICON $__ZSH_THEME_VCS_BRANCH$SWITCH_TO_LIGHT_COLOR$COL_black )$SWITCH_TO_EXT_CHARS$CHAR_horzBar $COL_yellow"
-    gitBranchEnd="
-"
-  fi
-
-  local TERMWIDTH
-  (( TERMWIDTH = ${COLUMNS} - 1 ))
-
-
-  ###
-  # Truncate the path if it's too long.
-
-  PR_FILLBAR=""
-  PR_PWDLEN=""
-
-  local promptsize=${#${(%):---( $__ZSH_THEME_OS_ICON $userType $userName $currentDir )----($dateAndTime)-}}
-  local pwdsize=${#${(%):-}}
-
-  if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-    ((PR_PWDLEN=$TERMWIDTH - $promptsize))
-  else
-    PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${CHAR_horzBar}.)}"
-  fi
+	# add a branch character and the GIT branch name to the prompt
+	gitBranch=$(__git_ps1)
+	gitBranchStart=''
+	gitBranchEnd=''
+	if [ $gitBranch ]; then
+		__setGitIcons
+		
+		 gitBranchStart="$CHAR_vertBar"$'\n'
+		gitBranchStart+="$CHAR_rightVertBarBranch$CHAR_horzBar$SWITCH_TO_NORM_CHARS( $SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS$__ZSH_THEME_VCS_ICON $__ZSH_THEME_VCS_BRANCH$SWITCH_TO_LIGHT_COLOR$COL_black )$SWITCH_TO_EXT_CHARS$CHAR_horzBar $COL_yellow"
+		gitBranchEnd=$'\n'
+	fi
+	
+	calcBar
 }
 
 function preexec () {
@@ -78,12 +99,6 @@ function preexec () {
 }
 
 function setprompt () {
-  ###
-  # Need this so the prompt will work.
-
-  setopt prompt_subst
-
-
   ###
   # See if we can use colors.
 
@@ -147,14 +162,16 @@ function setprompt () {
 
   ###
   # Finally, the prompt.
-
-  PROMPT='
-$SET_charset$SET_screenTitle${(e)SET_titleBar}\
-$SWITCH_TO_LIGHT_COLOR$COL_black$SWITCH_TO_EXT_CHARS$CHAR_upperLeftCorner$COL_black$CHAR_horzBar$CHAR_leftVertBarBranch$SWITCH_TO_NORM_CHARS $RESET_TEXT_FLAGS$COL_white$__ZSH_THEME_OS_ICON$SWITCH_TO_LIGHT_COLOR $COL_green$userType $COL_black$userName $COL_cyan$currentDir$COL_black $SWITCH_TO_EXT_CHARS$CHAR_rightVertBarBranch$CHAR_horzBar$COL_black$CHAR_horzBar${(e)PR_FILLBAR}$COL_black$CHAR_horzBar$CHAR_horzBar$COL_black$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_black$dateAndTime$COL_black)$SWITCH_TO_EXT_CHARS$CHAR_horzBar\
-$gitBranchStart$SWITCH_TO_NORM_CHARS$gitBranch$gitBranchEnd\
-$SWITCH_TO_EXT_CHARS$COL_black$CHAR_vertBar
-$CHAR_leftLeftCorner$COL_black$CHAR_horzBar$CHAR_horzBar$CHAR_horzBar$COL_yellow$CHAR_diamond$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS '
-
+	
+	 promptStr=''
+	promptStr+='$SET_charset$SET_screenTitle${(e)SET_titleBar}'$'\n'
+	promptStr+='$SWITCH_TO_LIGHT_COLOR$COL_black$SWITCH_TO_EXT_CHARS$CHAR_upperLeftCorner$COL_black$CHAR_horzBar$CHAR_leftVertBarBranch$SWITCH_TO_NORM_CHARS $RESET_TEXT_FLAGS$COL_white$__ZSH_THEME_OS_ICON$SWITCH_TO_LIGHT_COLOR $COL_green$userType $COL_black$userName $COL_cyan$currentDir $COL_black'
+	promptStr+='$SWITCH_TO_EXT_CHARS$CHAR_rightVertBarBranch$CHAR_horzBar$COL_black$CHAR_horzBar${(e)PR_FILLBAR}$COL_black$CHAR_horzBar$CHAR_horzBar$COL_black$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_black$dateAndTime$COL_black)$SWITCH_TO_EXT_CHARS$CHAR_horzBar'$'\n'
+	promptStr+='$gitBranchStart$SWITCH_TO_NORM_CHARS$gitBranch$gitBranchEnd'
+	promptStr+='$SWITCH_TO_EXT_CHARS$COL_black$CHAR_vertBar'$'\n'
+	promptStr+='$CHAR_leftLeftCorner$COL_black$CHAR_horzBar$CHAR_horzBar$CHAR_horzBar$COL_yellow$CHAR_diamond$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS '
+	PROMPT="$promptStr"
+	
   RPROMPT=''
   #RPROMPT=' $COL_red$SWITCH_TO_EXT_CHARS$CHAR_horzBar$PR_BLUE$CHAR_horzBar$SWITCH_TO_NORM_CHARS($COL_yellow%D{%a,%b%d}$PR_BLUE)$SWITCH_TO_EXT_CHARS$CHAR_horzBar$COL_cyan$CHAR_leftRightCorner$SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS'
 
@@ -179,3 +196,7 @@ function showStartMessage {
 # init custom prompt
 showStartMessage
 setprompt
+
+TRAPWINCH () {
+	calcBar
+}
