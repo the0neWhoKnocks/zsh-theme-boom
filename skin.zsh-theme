@@ -24,18 +24,21 @@ setopt prompt_subst
 source $currDir/git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=1
 
+THEME__BOOM__LOADED=false
 THEME__BOOM__PREV_COLUMNS=$COLUMNS
 PR_FILLBAR=""
 
 function calcBar {
 	local TERMWIDTH
 	local shrinking=false
-	if [ $THEME__BOOM__PREV_COLUMNS -eq $COLUMNS ]; then # equal
+	if ! $THEME__BOOM__LOADED; then
 		TERMWIDTH=$((COLUMNS - 1))
 	elif [ $THEME__BOOM__PREV_COLUMNS -lt $COLUMNS ]; then # growing
 		TERMWIDTH=$COLUMNS
-	else # shrinking
+	elif [ $THEME__BOOM__PREV_COLUMNS -gt $COLUMNS ]; then # shrinking
 		shrinking=true
+		TERMWIDTH=$((COLUMNS - 1))
+	else # equal
 		TERMWIDTH=$((COLUMNS - 1))
 	fi
 	THEME__BOOM__PREV_COLUMNS=$COLUMNS
@@ -238,6 +241,7 @@ function showStartMessage {
 # init custom prompt
 showStartMessage
 setprompt
+THEME__BOOM__LOADED=true
 
 TRAPWINCH () {
 	calcBar
