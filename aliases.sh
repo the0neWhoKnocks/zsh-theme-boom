@@ -4,5 +4,4 @@ alias ss="source ~/.zshrc"
 
 if [[ "$__ZSH_THEME_OS" == "Linux" ]]; then
   alias copy-ssh="xclip -selection c < ~/.ssh/$1"
-  alias open="kioclient5 exec $1"
 fi
