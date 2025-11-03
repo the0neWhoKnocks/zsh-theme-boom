@@ -59,6 +59,13 @@ This repo includes [two fonts](./fonts). One that works well with terminals, and
       (check) Custom font: (pick) 'FantasqueSansMono NF Regular 18'
       ```
 
+### Optional
+
+To enable colorized start message:
+```sh
+sudo apt install lolcat
+```
+
 ---
 
 ## Troubleshooting
