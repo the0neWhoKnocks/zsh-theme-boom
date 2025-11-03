@@ -21,7 +21,7 @@ of the directory path where you cloned or downloaded this repo:
 Automated approach
 ```sh
 (
-  git clone git@github.com:the0neWhoKnocks/zsh-theme-boom.git ${ZSH_CUSTOM}/themes/zsh-theme-boom
+  git clone https://github.com/the0neWhoKnocks/zsh-theme-boom.git ${ZSH_CUSTOM}/themes/zsh-theme-boom
   cd ${ZSH_CUSTOM}/themes/zsh-theme-boom
   git checkout linux
 )
@@ -47,7 +47,7 @@ This repo includes [two fonts](./fonts). One that works well with terminals, and
   sed "/^#zstyle ':omz:update' mode disabled/s/^#//" ~/.zshrc
   
   # add plugins
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
   sed "/plugins=(/,/)/c\plugins=(\n  zsh-autosuggestions\n  zsh-syntax-highlighting\n)" ~/.zshrc
   ```
