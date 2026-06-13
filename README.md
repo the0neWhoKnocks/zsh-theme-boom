@@ -35,10 +35,13 @@ sed -i -E 's|ZSH_THEME=".*"|ZSH_THEME="zsh-theme-boom/skin"|' ~/.zshrc
 This repo includes [two fonts](./fonts). One that works well with terminals, and the other that works well in IDE's (in case you want to see the icons in `git-prompt.sh` & `functions.sh`.
 - `Fantasque` is for the terminal
 - `Ubuntu` is for the IDE
+- I got the fonts from [the Nerd Fonts website](https://www.nerdfonts.com/font-downloads). Look for `FantasqueSansM` and `UbuntuMono`.
 
-1. Install the `Fantasque` font.
+1. Install the fonts.
   ```sh
-  sudo cp "${ZSH_CUSTOM}/themes/zsh-theme-boom/fonts/Fantasque Sans Mono Regular Nerd Font Complete Mono Windows Compatible.ttf" /usr/share/fonts/TTF/
+  TTF_DIR=/usr/share/fonts/truetype
+  sudo mkdir -p "${TTF_DIR}"
+  sudo find "${ZSH_CUSTOM}/themes/zsh-theme-boom/fonts" -name '*.ttf' -exec cp {} "${TTF_DIR}/" \;
   fc-cache -vf
   ```
 1. Optional settings and plugins
@@ -56,7 +59,7 @@ This repo includes [two fonts](./fonts). One that works well with terminals, and
     - Profiles > Default
       ```
       [General]
-      (check) Custom font: (pick) 'FantasqueSansMono NF Regular 18'
+      (check) Custom font: (pick) 'FantasqueSansM Nerd Font Mono Regular 18'
       ```
 
 ### Optional

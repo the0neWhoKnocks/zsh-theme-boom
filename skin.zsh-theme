@@ -86,7 +86,7 @@ function precmd {
 	if [ $gitBranch ]; then
 		__setGitIcons
 		
-		 gitBranchStart="$CHAR_vertBar"$'\n'
+		gitBranchStart="$CHAR_vertBar"$'\n'
 		gitBranchStart+="$CHAR_rightVertBarBranch$CHAR_horzBar$SWITCH_TO_NORM_CHARS( $SWITCH_TO_NORM_CHARS$RESET_TEXT_FLAGS$__ZSH_THEME_VCS_ICON $__ZSH_THEME_VCS_BRANCH$SWITCH_TO_LIGHT_COLOR$COL_black )$SWITCH_TO_EXT_CHARS$CHAR_horzBar $COL_yellow"
 		gitBranchEnd=$'\n'
 	fi

@@ -46,7 +46,12 @@ __detectOS
 function __setOSIcon {
   typeset -g __ZSH_THEME_OS_ICON
   
-  # Icons - http://nerdfonts.com/#cheat-sheet
+  # Icons - https://www.nerdfonts.com/cheat-sheet
+  # > With Release v3.0.0 the Material Design Icons were updated and moved to a 
+  # > new codepoint range (reasons for that are in the release notes).
+  # > They are still shown in the cheat-sheet for reference, but are missing in
+  # > the actual fonts.
+  # So if you see an icon with `-md-`, it'll be missing in the font.
   
   case "$__ZSH_THEME_OS" in            
     "OSX")
@@ -58,7 +63,7 @@ function __setOSIcon {
     ;;
     
     "BSD")
-      __ZSH_THEME_OS_ICON=$'\uF30c' # 
+      __ZSH_THEME_OS_ICON=$'\uF0C6F' # 󰱯
     ;;
     
     "Linux")
@@ -67,12 +72,16 @@ function __setOSIcon {
           __ZSH_THEME_OS_ICON=$'\uF303' # 
         ;;
         
-        "debian")
-          __ZSH_THEME_OS_ICON=$'\uE77D' # 
+        "centos")
+          __ZSH_THEME_OS_ICON=$'\uF304' # 
         ;;
         
-        "ubuntu")
-          __ZSH_THEME_OS_ICON=$'\uF31B' # 
+        "coreos")
+          __ZSH_THEME_OS_ICON=$'\uF305' # 
+        ;;
+        
+        "debian")
+          __ZSH_THEME_OS_ICON=$'\uE77D' # 
         ;;
         
         "elementary")
@@ -83,28 +92,24 @@ function __setOSIcon {
           __ZSH_THEME_OS_ICON=$'\uF30A' # 
         ;;
         
-        "rhel")
-          __ZSH_THEME_OS_ICON=$'\uE7BB' # 
-        ;;
-        
-        "coreos")
-          __ZSH_THEME_OS_ICON=$'\uF305' # 
-        ;;
-        
         "gentoo")
           __ZSH_THEME_OS_ICON=$'\uF30D' # 
+        ;;
+        
+        "linuxmint")
+          __ZSH_THEME_OS_ICON=$'\uF30F' # 
         ;;
         
         "mageia")
           __ZSH_THEME_OS_ICON=$'\uF310' # 
         ;;
         
-        "centos")
-          __ZSH_THEME_OS_ICON=$'\uF304' # 
-        ;;
-        
         "opensuse"|"tumbleweed")
           __ZSH_THEME_OS_ICON=$'\uF314' # 
+        ;;
+        
+        "rhel")
+          __ZSH_THEME_OS_ICON=$'\uEF5D' # 
         ;;
         
         "sabayon")
@@ -115,12 +120,12 @@ function __setOSIcon {
           __ZSH_THEME_OS_ICON=$'\uF318' # 
         ;;
         
-        "linuxmint")
-          __ZSH_THEME_OS_ICON=$'\uF30E' # 
+        "ubuntu")
+          __ZSH_THEME_OS_ICON=$'\uF31B' # 
         ;;
         
         *)
-          __ZSH_THEME_OS_ICON=$'\uF17C' # 
+          __ZSH_THEME_OS_ICON=$'\uE712' # 
         ;;
       esac
     ;;

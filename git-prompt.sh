@@ -517,13 +517,13 @@ function __setGitIcons {
   typeset -g __ZSH_THEME_VCS_ICON __ZSH_THEME_VCS_BRANCH
   local remote=$(command git ls-remote --get-url 2> /dev/null)
   
-	# Icons - http://nerdfonts.com/#cheat-sheet
+	# Icons - https://www.nerdfonts.com/cheat-sheet
   __ZSH_THEME_VCS_BRANCH=$'\uF126' # 
   
   if [[ "$remote" =~ "github" ]] then
-    __ZSH_THEME_VCS_ICON=$'\Ue708' # 
+    __ZSH_THEME_VCS_ICON=$'\uF113' # 
   elif [[ "$remote" =~ "bitbucket" ]] || [[ "$remote" =~ "stash" ]] then
-    __ZSH_THEME_VCS_ICON=$'\uE703' # 
+    __ZSH_THEME_VCS_ICON=$'\uF171' # 
   elif [[ "$remote" =~ "gitlab" ]] then
     __ZSH_THEME_VCS_ICON=$'\uF296' # 
   else
