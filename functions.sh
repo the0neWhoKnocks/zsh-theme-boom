@@ -104,6 +104,10 @@ function __setOSIcon {
           __ZSH_THEME_OS_ICON=$'\uF310' # 
         ;;
         
+        "nixos")
+          __ZSH_THEME_OS_ICON=$'\uF313' # 
+        ;;
+        
         "opensuse"|"tumbleweed")
           __ZSH_THEME_OS_ICON=$'\uF314' # 
         ;;
